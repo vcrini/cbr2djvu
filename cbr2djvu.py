@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import shutil
 import sys
 from subprocess import call
 import tempfile
@@ -23,6 +24,7 @@ def convert(filename):
     call(['convert', '*', 'foo.pdf'])
     call(['pdf2djvu', 'foo.pdf', '-o', name])
     call(['mv', os.path.join(inner_path, name), old_directory])
+    shutil.rmtree(directory)
 
 
 if __name__ == '__main__':
