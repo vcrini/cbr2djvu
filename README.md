@@ -3,9 +3,9 @@ Used to convert from Comic Book Archive (cbr) format to DjVu.
 
 Usage:
 
-cbr2djvu.py foo.cbr
+cbr2djvu.py *.cbr
 
-creates a foo.djvu version of the input file.
+creates a djvu version for every .cbr file present.
 
 Notes:
 
