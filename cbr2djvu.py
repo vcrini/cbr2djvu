@@ -29,4 +29,6 @@ def convert(filename):
 
 if __name__ == '__main__':
     old_directory = os.getcwd()
-    convert(sys.argv[1])
+    for fn in sys.argv[1:]:
+        convert(fn)
+
