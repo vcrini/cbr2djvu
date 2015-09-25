@@ -6,6 +6,7 @@ import shutil
 import sys
 from subprocess import call
 import tempfile
+import magic
 
 env = os.environ.copy()
 env['MAGICK_TMPDIR'] = tempfile.mkdtemp(dir=os.getcwd())
@@ -15,14 +16,15 @@ def convert(filename):
     directory = tempfile.mkdtemp()
     os.chdir(directory)
     filename = os.path.join(old_directory, filename)
-    call(['rar', 'x', filename])
+    m = mime.from_file(filename)
+    if m == 'application/x-rar':
+        call(['rar', 'e', filename])
+    else:
+
+        call(['unzip', '-j', filename])
     ll = os.listdir(directory)
     inner_path = os.path.join(directory, ll[0])
 
-    # if there is a directory go inside
-
-    if len(ll) == 1 and os.path.isdir(inner_path):
-        os.chdir(inner_path)
     name = os.path.splitext(filename)[0] + '.djvu'
 
     call([
@@ -41,7 +43,9 @@ def convert(filename):
 
     shutil.rmtree(directory)
 
+
 if __name__ == '__main__':
+    mime = magic.Magic(mime=True)
     old_directory = os.getcwd()
     for fn in sys.argv[1:]:
         convert(fn)
